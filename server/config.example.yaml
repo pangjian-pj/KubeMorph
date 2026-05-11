@@ -1,0 +1,7 @@
+server_addr: ":8080"
+log_level: "info"
+etcd:
+  endpoints:
+    - "http://localhost:2379"
+  prefix: "/kubex"
+  dial_timeout_seconds: 5

@@ -1,0 +1,34 @@
+services:
+  etcd:
+    image: quay.io/coreos/etcd:v3.5.12
+    command:
+      - /usr/local/bin/etcd
+      - --name
+      - etcd0
+      - --data-dir
+      - /etcd-data
+      - --listen-client-urls
+      - http://0.0.0.0:2379
+      - --advertise-client-urls
+      - http://etcd:2379
+    ports:
+      - "2379:2379"
+    healthcheck:
+      test: ["CMD", "sh", "-c", "ETCDCTL_API=3 etcdctl --endpoints=http://127.0.0.1:2379 endpoint health"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      KUBEX_SERVER_ADDR: ":8080"
+      KUBEX_ETCD_ENDPOINTS: "http://etcd:2379"
+      KUBEX_LOG_LEVEL: "info"
+    ports:
+      - "8080:8080"
+    depends_on:
+      etcd:
+        condition: service_healthy
