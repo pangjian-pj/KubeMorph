@@ -18,7 +18,7 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/util/retry"
 
-	corev1alpha1 "github.com/pangjian-pj/kubeX/kubeX-controller/api/v1alpha1"
+	corev1alpha1 "github.com/pangjian-pj/KubeMorph/controller/api/v1alpha1"
 )
 
 type ClusterApplier struct {

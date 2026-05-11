@@ -9,11 +9,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/pangjian-pj/kubeX/kubeX-server/internal/api"
-	"github.com/pangjian-pj/kubeX/kubeX-server/internal/config"
-	"github.com/pangjian-pj/kubeX/kubeX-server/internal/kube"
-	"github.com/pangjian-pj/kubeX/kubeX-server/internal/logging"
-	"github.com/pangjian-pj/kubeX/kubeX-server/internal/storage"
+	"github.com/pangjian-pj/KubeMorph/server/internal/api"
+	"github.com/pangjian-pj/KubeMorph/server/internal/config"
+	"github.com/pangjian-pj/KubeMorph/server/internal/kube"
+	"github.com/pangjian-pj/KubeMorph/server/internal/logging"
+	"github.com/pangjian-pj/KubeMorph/server/internal/storage"
 	"go.uber.org/zap"
 )
 

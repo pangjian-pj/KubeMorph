@@ -9,8 +9,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	corev1alpha1 "github.com/pangjian-pj/kubeX/kubeX-controller/api/v1alpha1"
-	"github.com/pangjian-pj/kubeX/kubeX-server/internal/kube"
+	corev1alpha1 "github.com/pangjian-pj/KubeMorph/controller/api/v1alpha1"
+	"github.com/pangjian-pj/KubeMorph/server/internal/kube"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"go.uber.org/zap"
 	corev1 "k8s.io/api/core/v1"

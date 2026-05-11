@@ -3,7 +3,7 @@ package kube
 import (
 	"fmt"
 
-	"github.com/pangjian-pj/kubeX/kubeX-server/internal/config"
+	"github.com/pangjian-pj/KubeMorph/server/internal/config"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/runtime/serializer"

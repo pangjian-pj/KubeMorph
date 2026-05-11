@@ -1,0 +1,305 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: clusters.core.kubex.io
+spec:
+  group: core.kubex.io
+  names:
+    kind: Cluster
+    listKind: ClusterList
+    plural: clusters
+    singular: cluster
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Cluster is the Schema for the clusters API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: spec defines the desired state of Cluster
+            properties:
+              apiEndpoint:
+                description: |-
+                  APIEndpoint is the API endpoint of the member cluster.
+                  This can be a hostname, hostname:port, IP or IP:port.
+                maxLength: 2048
+                minLength: 1
+                type: string
+              secretRef:
+                description: |-
+                  SecretRef is the name of the Secret containing credentials required to access the member cluster.
+                  The Secret needs to exist in the fed system namespace.
+                maxLength: 253
+                minLength: 1
+                type: string
+            required:
+            - apiEndpoint
+            - secretRef
+            type: object
+          status:
+            description: status defines the observed state of Cluster
+            properties:
+              conditions:
+                description: Conditions is an array of current cluster conditions.
+                items:
+                  description: Condition contains details for one aspect of the current
+                    state of this API Resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        lastTransitionTime is the last time the condition transitioned from one status to another.
+                        This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        message is a human readable message indicating details about the transition.
+                        This may be an empty string.
+                      maxLength: 32768
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        observedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      minimum: 0
+                      type: integer
+                    reason:
+                      description: |-
+                        reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                        Producers of specific condition types may define expected values and meanings for this field,
+                        and whether the values are considered a guaranteed API.
+                        The value should be a CamelCase string.
+                        This field may not be empty.
+                      maxLength: 1024
+                      minLength: 1
+                      pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                      type: string
+                    status:
+                      description: status of the condition, one of True, False, Unknown.
+                      enum:
+                      - "True"
+                      - "False"
+                      - Unknown
+                      type: string
+                    type:
+                      description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                      maxLength: 316
+                      pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              lastProbeTime:
+                description: LastProbeTime is the timestamp of the last successful
+                  probe/sync.
+                format: date-time
+                type: string
+              nodes:
+                description: Nodes is a summary list for each node in the member cluster.
+                items:
+                  description: NodeSummary is a lightweight snapshot of a member cluster
+                    node.
+                  properties:
+                    allocatable:
+                      description: Allocatable is node allocatable resources.
+                      properties:
+                        cpu:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: CPU is CPU cores (or millicores) as a k8s quantity.
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        memory:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: Memory is memory as a k8s quantity.
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        pods:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: Pods is the number of pods allocatable/free
+                            on this node.
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                      type: object
+                    free:
+                      description: Free = allocatable - requested (for cpu/memory/pods).
+                      properties:
+                        cpu:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: CPU is CPU cores (or millicores) as a k8s quantity.
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        memory:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: Memory is memory as a k8s quantity.
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        pods:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: Pods is the number of pods allocatable/free
+                            on this node.
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                      type: object
+                    labels:
+                      additionalProperties:
+                        type: string
+                      description: Labels is a subset/all node labels.
+                      type: object
+                    name:
+                      description: Name is the node name.
+                      type: string
+                    ready:
+                      description: Ready indicates whether the node is Ready.
+                      type: boolean
+                    requested:
+                      description: Requested is requested resources summed from pod
+                        spec requests on this node.
+                      properties:
+                        cpu:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: CPU is CPU cores (or millicores) as a k8s quantity.
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        memory:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: Memory is memory as a k8s quantity.
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        pods:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: Pods is the number of pods allocatable/free
+                            on this node.
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                      type: object
+                    uid:
+                      description: UID is the Kubernetes UID of the node.
+                      type: string
+                  type: object
+                type: array
+              phase:
+                description: 'Phase is a coarse-grained state machine phase: Importing/Ready/NotReady/Failed.'
+                enum:
+                - Importing
+                - Ready
+                - NotReady
+                - Failed
+                type: string
+              resources:
+                description: Resources describes the cluster's resources.
+                properties:
+                  allocatable:
+                    properties:
+                      cpu:
+                        anyOf:
+                        - type: integer
+                        - type: string
+                        description: |-
+                          CPU is the total CPU cores of the cluster.
+                          Serialized as a string, e.g. "32".
+                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                        x-kubernetes-int-or-string: true
+                      memory:
+                        anyOf:
+                        - type: integer
+                        - type: string
+                        description: |-
+                          Memory is the total memory of the cluster.
+                          Serialized as a string, e.g. "128Gi".
+                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                        x-kubernetes-int-or-string: true
+                    type: object
+                  capacity:
+                    description: Resources describes the cluster's resources.
+                    properties:
+                      cpu:
+                        anyOf:
+                        - type: integer
+                        - type: string
+                        description: |-
+                          CPU is the total CPU cores of the cluster.
+                          Serialized as a string, e.g. "32".
+                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                        x-kubernetes-int-or-string: true
+                      memory:
+                        anyOf:
+                        - type: integer
+                        - type: string
+                        description: |-
+                          Memory is the total memory of the cluster.
+                          Serialized as a string, e.g. "128Gi".
+                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                        x-kubernetes-int-or-string: true
+                    type: object
+                  nodeCount:
+                    description: NodeCount is the number of Nodes in the member cluster.
+                    format: int64
+                    type: integer
+                  podCount:
+                    description: PodCount is the number of Pods (all namespaces) in
+                      the member cluster.
+                    format: int64
+                    type: integer
+                type: object
+              updatedAt:
+                description: UpdatedAt is the last time the controller updated the
+                  status.
+                format: date-time
+                type: string
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

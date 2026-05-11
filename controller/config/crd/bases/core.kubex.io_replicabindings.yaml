@@ -1,0 +1,165 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: replicabindings.core.kubex.io
+spec:
+  group: core.kubex.io
+  names:
+    kind: ReplicaBinding
+    listKind: ReplicaBindingList
+    plural: replicabindings
+    singular: replicabinding
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: ReplicaBinding is the Schema for the replicabindings API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ReplicaBindingSpec defines the desired state of ReplicaBinding.
+            properties:
+              globalDeploymentRef:
+                description: GlobalDeploymentRef references the GlobalDeployment this
+                  binding belongs to.
+                properties:
+                  name:
+                    description: Name is the name of the referenced object.
+                    minLength: 1
+                    type: string
+                  namespace:
+                    description: Namespace is the namespace of the referenced object.
+                    minLength: 1
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+              replicaIndex:
+                description: ReplicaIndex is 0..replicas-1.
+                format: int32
+                minimum: 0
+                type: integer
+              reschedule:
+                description: |-
+                  Reschedule indicates this replica should be migrated (rolling) to the target cluster/node.
+                  When set to true, GlobalDeployment controller will perform rolling migration, then set it back to false.
+                type: boolean
+              rescheduleRequest:
+                description: |-
+                  RescheduleRequest is a traceable execution request token for rescheduling.
+                  It MUST be unique for each reschedule attempt of the same ReplicaBinding (e.g. include planName/uuid).
+                  Controllers MUST NOT reset/clear this field as a completion signal.
+                type: string
+              targetCluster:
+                description: TargetCluster is the target member clusterId.
+                maxLength: 253
+                minLength: 1
+                type: string
+              targetNodeName:
+                description: TargetNodeName is the Kubernetes node name in the target
+                  member cluster.
+                maxLength: 1024
+                minLength: 1
+                type: string
+            required:
+            - globalDeploymentRef
+            - replicaIndex
+            type: object
+          status:
+            description: ReplicaBindingStatus defines the observed state of ReplicaBinding.
+            properties:
+              clusterName:
+                description: ClusterName is the display name of the member cluster,
+                  used by UI.
+                type: string
+              lastError:
+                description: LastError records the last error message.
+                type: string
+              lastTransitionTime:
+                description: LastTransitionTime is set when phase changes.
+                format: date-time
+                type: string
+              nodeName:
+                description: NodeName is the actual node where the member pod is running
+                  (ground truth).
+                type: string
+              phase:
+                description: Phase indicates current phase.
+                enum:
+                - Pending
+                - Assigned
+                - Applying
+                - Running
+                - Failed
+                - Rescheduling
+                - Deleting
+                type: string
+              reschedule:
+                description: Reschedule records reschedule execution watermark + observed
+                  outcomes.
+                properties:
+                  lastError:
+                    description: LastError carries error details if LastResult=Failed.
+                    type: string
+                  lastHandledRequest:
+                    description: LastHandledRequest is the last rescheduleRequest
+                      token that the executors have handled/confirmed.
+                    type: string
+                  lastHandledTime:
+                    description: LastHandledTime is the last time the request was
+                      handled.
+                    format: date-time
+                    type: string
+                  lastResult:
+                    description: LastResult is the terminal result for LastHandledRequest.
+                    enum:
+                    - Succeeded
+                    - Failed
+                    type: string
+                  message:
+                    description: Message is a human-readable message for the last
+                      handled request.
+                    type: string
+                  observedLocation:
+                    description: ObservedLocation is the ground-truth location after
+                      handling the request.
+                    properties:
+                      clusterId:
+                        description: ClusterId is the member cluster identifier.
+                        type: string
+                      nodeName:
+                        description: NodeName is the node name inside the member cluster.
+                        type: string
+                      podName:
+                        description: PodName is a representative member pod name for
+                          this replica (optional).
+                        type: string
+                    type: object
+                type: object
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

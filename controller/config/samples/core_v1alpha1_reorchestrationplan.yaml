@@ -1,0 +1,23 @@
+apiVersion: core.kubex.io/v1alpha1
+kind: ReOrchestrationPlan
+metadata:
+  name: reorchestrationplan-sample
+  namespace: kubex-system
+spec:
+  summary:
+    policyName: default-optimization
+    estimatedImprovementScore: 18.5
+    podsToMove: 1
+    currentScore: 1250.7
+    expectedScore: 1018.2
+  moves:
+    - globalDeploymentRef:
+        name: nginx-global
+        namespace: default
+      replicaIndex: 0
+      source:
+        clusterId: cluster-b
+        nodeName: node-10
+      destination:
+        clusterId: cluster-a
+        nodeName: node-3

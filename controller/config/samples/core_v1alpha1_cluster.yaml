@@ -1,0 +1,21 @@
+apiVersion: core.kubex.io/v1alpha1
+kind: Cluster
+metadata:
+  labels:
+    app.kubernetes.io/name: kubex-controller
+    app.kubernetes.io/managed-by: kustomize
+  name: cluster-sample
+spec:
+  apiEndpoint: "https://10.0.0.1:6443"
+  secretRef: "cluster-sample-kubeconfig"
+
+# status 通常由 controller 写回，这里仅作为字段示例（不要手动提交 status）。
+# status:
+#   phase: Ready
+#   resources:
+#     capacity:
+#       cpu: "32"
+#       memory: "128Gi"
+#     allocatable:
+#       cpu: "28"
+#       memory: "110Gi"

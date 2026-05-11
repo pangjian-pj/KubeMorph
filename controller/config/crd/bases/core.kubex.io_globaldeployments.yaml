@@ -1,0 +1,102 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: globaldeployments.core.kubex.io
+spec:
+  group: core.kubex.io
+  names:
+    kind: GlobalDeployment
+    listKind: GlobalDeploymentList
+    plural: globaldeployments
+    singular: globaldeployment
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: GlobalDeployment is the Schema for the globaldeployments API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: GlobalDeploymentSpec defines the desired state of GlobalDeployment.
+            properties:
+              replicas:
+                description: Replicas is the total replicas desired globally.
+                format: int32
+                minimum: 0
+                type: integer
+              template:
+                description: |-
+                  Template is the user-provided native Kubernetes Deployment template.
+                  Convention: we treat this as a template and will create per-replica (replicas=1)
+                  member deployments named: <globaldeploy-name>-r<replicaIndex>.
+
+                  Why RawExtension?
+                  - Encoding appsv1.DeploymentSpec directly makes controller-gen inline a huge OpenAPI schema,
+                    which can exceed apiserver's metadata.annotations size limit when installing the CRD.
+                  - We only need a subset of fields at runtime (pod template requests, etc.).
+                type: object
+                x-kubernetes-preserve-unknown-fields: true
+            required:
+            - template
+            type: object
+          status:
+            description: GlobalDeploymentStatus defines the observed state of GlobalDeployment.
+            properties:
+              failed:
+                description: Failed is the number of replicas in Failed phase.
+                format: int32
+                type: integer
+              observedRevision:
+                description: |-
+                  ObservedRevision is the global rolling revision maintained by GlobalDeployment controller.
+                  It is used to differentiate old/new replicas during rolling migration.
+                type: string
+              pending:
+                description: Pending is the number of replicas still pending.
+                format: int32
+                type: integer
+              phase:
+                description: Phase is the aggregated phase computed from ReplicaBindings.
+                enum:
+                - Pending
+                - Progressing
+                - Running
+                - Degraded
+                - Scaling
+                - Deleting
+                - Failed
+                type: string
+              running:
+                description: Running is the number of replicas in Running phase.
+                format: int32
+                type: integer
+              updatedAt:
+                description: UpdatedAt is the last time the controller updated status.
+                format: date-time
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

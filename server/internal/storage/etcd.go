@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/pangjian-pj/kubeX/kubeX-server/internal/config"
+	"github.com/pangjian-pj/KubeMorph/server/internal/config"
 	clientv3 "go.etcd.io/etcd/client/v3"
 )
 
