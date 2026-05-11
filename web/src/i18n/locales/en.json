@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "clusters": "Clusters",
+    "applications": "Applications",
+    "optimizations": "Optimizations",
+    "language": "Language"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "submitting": "Submitting..."
+  },
+  "clusters": {
+    "title": "Cluster Management",
+    "desc": "Manage member clusters and their kubeconfig metadata.",
+    "list": {
+      "name": "Name",
+      "description": "Description",
+      "provider": "Provider",
+      "status": "Status",
+      "labels": "Labels",
+      "createdAt": "Created Time",
+      "actions": "Actions",
+      "viewDetail": "Details",
+      "loading": "Loading...",
+      "empty": "No clusters",
+      "expand": "Expand +{n}",
+      "collapse": "Collapse"
+    },
+    "detail": {
+      "title": "Cluster Detail",
+      "back": "Back",
+      "refresh": "Refresh",
+      "loading": "Loading...",
+      "empty": "No data",
+      "clusterId": "Cluster ID",
+      "name": "Name",
+      "description": "Description",
+      "provider": "Provider",
+      "status": "Status",
+      "apiEndpoint": "API Endpoint",
+      "secretName": "Secret Name",
+      "createdAt": "Created Time",
+      "updatedAt": "Updated Time",
+      "nodesEmpty": "No nodes",
+      "tabs": {
+        "kubeconfig": "kubeconfig",
+        "resources": "Resources",
+        "nodes": "Nodes"
+      },
+      "resources": {
+        "capacityCpu": "Total CPU",
+        "capacityMem": "Total Memory",
+        "allocatableCpu": "Allocatable CPU",
+        "allocatableMem": "Allocatable Memory",
+        "nodeCount": "Nodes",
+        "podCount": "Pods"
+      }
+    },
+    "filters": {
+      "searchPlaceholder": "Search by cluster name...",
+      "labelSelectorPlaceholder": "Label selector: env=prod,region=cn-shanghai",
+      "allProviders": "All providers",
+      "allStatus": "All status",
+      "search": "Search",
+      "reset": "Reset"
+    },
+    "paging": {
+      "total": "Total {n}",
+      "prev": "Prev",
+      "next": "Next"
+    },
+    "import": {
+      "button": "Import Cluster",
+      "title": "Import Cluster",
+      "name": "Name",
+      "namePlaceholder": "e.g. prod-cluster",
+      "description": "Description",
+      "descriptionPlaceholder": "Optional",
+      "provider": "Provider",
+      "kubeconfig": "kubeconfig",
+      "kubeconfigPlaceholder": "Paste kubeconfig content",
+      "labels": "Labels",
+      "labelsPlaceholder": "JSON or one key=value per line",
+      "labelsHint": "Example:\nregion=cn-shanghai\nenv=prod\n\nOr: {\"region\":\"cn-shanghai\",\"env\":\"prod\"}"
+    },
+    "delete": {
+      "single": "Delete",
+      "batch": "Delete",
+      "title": "Delete Clusters",
+      "confirm": "Delete {n} clusters? This action can't be undone.",
+      "confirmButton": "Confirm delete",
+      "deleted": "Deleted {n}",
+      "failed": "Failed {n}"
+    },
+    "update": {
+      "button": "Update",
+      "title": "Update Cluster",
+      "name": "Name",
+      "namePlaceholder": "e.g. prod-cluster-main",
+      "description": "Description",
+      "descriptionPlaceholder": "Optional (leave empty to clear)",
+      "provider": "Provider",
+      "labels": "Labels",
+      "labelsPlaceholder": "JSON or one key=value per line",
+      "labelsHint": "Example:\nregion=cn-shanghai\nenv=prod\n\nOr: {\"region\":\"cn-shanghai\",\"env\":\"prod\"}",
+      "submit": "Save"
+    }
+  },
+  "applications": {
+    "title": "Application Management",
+    "desc": "Create and manage cross-cluster distributed applications.",
+    "todoList": "(Next) This page will include listing/search/filtering and details.",
+    "create": {
+      "button": "Create Application",
+      "title": "Create Application (GlobalDeployment)",
+      "name": "Name",
+      "namePlaceholder": "e.g. nginx-global",
+      "namespace": "Namespace",
+      "namespacePlaceholder": "e.g. default",
+      "replicas": "Replicas",
+      "template": "DeploymentSpec",
+      "templatePlaceholder": "Paste apps/v1 DeploymentSpec",
+      "submit": "Create"
+    }
+  },
+  "optimizations": {
+    "title": "Optimization Management",
+    "desc": "Create and track global optimization scheduling plans."
+  }
+}

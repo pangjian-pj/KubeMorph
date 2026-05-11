@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "clusters": "集群管理",
+    "applications": "应用管理",
+    "optimizations": "优化管理",
+    "language": "语言"
+  },
+  "common": {
+    "cancel": "取消",
+    "submit": "提交",
+    "submitting": "提交中..."
+  },
+  "clusters": {
+    "title": "集群管理",
+    "desc": "纳管成员集群及其 kubeconfig 等元数据。",
+    "list": {
+      "name": "集群名称",
+      "description": "描述",
+      "provider": "云厂商",
+      "status": "状态",
+      "labels": "标签",
+      "createdAt": "创建时间",
+      "actions": "操作",
+      "viewDetail": "详情",
+      "loading": "加载中...",
+      "empty": "暂无集群",
+      "expand": "展开 +{n}",
+      "collapse": "收起"
+    },
+    "detail": {
+      "title": "集群详情",
+      "back": "返回列表",
+      "refresh": "刷新",
+      "loading": "加载中...",
+      "empty": "暂无数据",
+      "clusterId": "集群ID",
+      "name": "名称",
+      "description": "描述",
+      "provider": "云厂商",
+      "status": "状态",
+      "apiEndpoint": "API Endpoint",
+      "secretName": "Secret 名称",
+      "createdAt": "创建时间",
+      "updatedAt": "更新时间",
+      "nodesEmpty": "暂无节点数据",
+      "tabs": {
+        "kubeconfig": "kubeconfig",
+        "resources": "资源",
+        "nodes": "节点"
+      },
+      "resources": {
+        "capacityCpu": "总 CPU",
+        "capacityMem": "总内存",
+        "allocatableCpu": "可分配 CPU",
+        "allocatableMem": "可分配内存",
+        "nodeCount": "节点数量",
+        "podCount": "Pod 数量"
+      }
+    },
+    "filters": {
+      "searchPlaceholder": "搜索集群名称...",
+      "labelSelectorPlaceholder": "Label Selector：env=prod,region=cn-shanghai",
+      "allProviders": "全部云厂商",
+      "allStatus": "全部状态",
+      "search": "查询",
+      "reset": "重置"
+    },
+    "paging": {
+      "total": "共 {n} 条",
+      "prev": "上一页",
+      "next": "下一页"
+    },
+    "import": {
+      "button": "导入集群",
+      "title": "导入集群",
+      "name": "名称",
+      "namePlaceholder": "例如：prod-cluster",
+      "description": "描述",
+      "descriptionPlaceholder": "可选",
+      "provider": "云厂商",
+      "kubeconfig": "kubeconfig",
+      "kubeconfigPlaceholder": "粘贴 kubeconfig 内容",
+      "labels": "标签 (Labels)",
+      "labelsPlaceholder": "支持 JSON 或 每行 key=value",
+      "labelsHint": "示例：\nregion=cn-shanghai\nenv=prod\n\n或：{\"region\":\"cn-shanghai\",\"env\":\"prod\"}"
+    },
+    "delete": {
+      "single": "删除",
+      "batch": "批量删除",
+      "title": "删除集群",
+      "confirm": "确认删除 {n} 个集群？该操作不可恢复。",
+      "confirmButton": "确认删除",
+      "deleted": "已删除 {n} 个",
+      "failed": "失败 {n} 个"
+    },
+    "update": {
+      "title": "更新集群",
+      "name": "名称",
+      "namePlaceholder": "例如：prod-cluster-main",
+      "description": "描述",
+      "descriptionPlaceholder": "可选（留空表示清空）",
+      "provider": "云厂商",
+      "labels": "标签 (Labels)",
+      "labelsPlaceholder": "支持 JSON 或 每行 key=value",
+      "labelsHint": "示例：\nregion=cn-shanghai\nenv=prod\n\n或：{\"region\":\"cn-shanghai\",\"env\":\"prod\"}",
+      "submit": "保存"
+    }
+  },
+  "applications": {
+    "title": "应用管理",
+    "desc": "创建与管理跨集群分发应用。",
+    "todoList": "（下一步）这里将展示应用列表、搜索/筛选与详情入口。",
+    "create": {
+      "button": "创建应用",
+      "title": "创建应用（GlobalDeployment）",
+      "name": "名称",
+      "namePlaceholder": "例如：nginx-global",
+      "namespace": "命名空间",
+      "namespacePlaceholder": "例如：default",
+      "replicas": "副本数",
+  "template": "DeploymentSpec (YAML)",
+  "templatePlaceholder": "粘贴 apps/v1 DeploymentSpec 的 YAML（例如：selector: ...\ntemplate: ...）",
+  "templateHint": "仅支持 YAML。这里建议直接粘贴 deployment.spec（不是完整 Deployment）。",
+      "submit": "创建"
+    }
+  },
+  "optimizations": {
+    "title": "优化管理",
+    "desc": "创建与跟踪全局优化调度计划。"
+  }
+}

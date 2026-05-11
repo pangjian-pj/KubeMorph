@@ -1,0 +1,21 @@
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  background:
+    radial-gradient(1200px 600px at 20% 0%, rgba(46, 140, 255, 0.18), transparent 60%),
+    radial-gradient(900px 500px at 80% 20%, rgba(120, 200, 255, 0.16), transparent 55%),
+    linear-gradient(180deg, #f4f9ff 0%, #f7fbff 40%, #f6f8fb 100%);
+}
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  /* “淡蓝科技感”主色：更偏清冷蓝 */
+  --kubex-primary: #2e8cff;
+}
