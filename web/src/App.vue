@@ -15,7 +15,7 @@ function toggleLocale() {
 <template>
   <div class="app">
     <header class="topbar">
-      <div class="brand">kubeX</div>
+      <div class="brand">KubeMorph</div>
       <nav class="nav">
         <RouterLink to="/clusters">{{ t('nav.clusters') }}</RouterLink>
         <RouterLink to="/applications">{{ t('nav.applications') }}</RouterLink>
